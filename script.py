@@ -13,6 +13,10 @@ import os
 from dotenv import load_dotenv
 from googleapiclient.discovery import build
 from googleapiclient.http import MediaIoBaseDownload
+from selenium import webdriver
+from selenium.webdriver.chrome.service import Service
+from webdriver_manager.chrome import ChromeDriverManager
+
 import io
 
 # Cargar variables de entorno
@@ -24,14 +28,15 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(
 class InterrapidisimoTracker:
     def __init__(self):
         # Configurar Selenium (usando Chrome)
-        chrome_options = webdriver.ChromeOptions()
-        chrome_options.add_argument('--headless')  # Descomentar para producción
-        chrome_options.add_argument('--no-sandbox')
-        chrome_options.add_argument('--disable-dev-shm-usage')
-        chrome_options.add_experimental_option("prefs", {
-            "profile.default_content_setting_values.notifications": 2,
-        })
-        self.driver = webdriver.Chrome(options=chrome_options)
+        options = webdriver.ChromeOptions()
+        options.add_argument("--headless")  # si no necesitas ventana
+        options.add_argument("--no-sandbox")
+        options.add_argument("--disable-dev-shm-usage")
+
+        self.driver = webdriver.Chrome(
+            service=Service(ChromeDriverManager().install()),
+            options=options
+        )
         
         # Configuración de Google Sheets y Drive
         scope = [
