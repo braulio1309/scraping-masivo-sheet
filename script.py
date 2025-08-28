@@ -29,7 +29,7 @@ class InterrapidisimoTracker:
     def __init__(self):
         # Configurar Selenium (usando Chrome)
         options = webdriver.ChromeOptions()
-        options.add_argument("--headless")  # si no necesitas ventana
+        #options.add_argument("--headless")  # si no necesitas ventana
         options.add_argument("--no-sandbox")
         options.add_argument("--disable-dev-shm-usage")
 
